@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import DiceBoard from './components/diceBoard.jsx'
 import "./styles/index.css"
+import Text from './components/text.jsx'
 
 
 function App() {
@@ -15,10 +16,13 @@ function App() {
             {!showDice ? (
                 <button onClick={handleShow}>Start Game</button>
             ) : (
-                <DiceBoard />
+                <>
+                    <Text />
+                    <DiceBoard />
+                </>
             )}
         </div>
     );
 }
 
-export default App
+export default App;
