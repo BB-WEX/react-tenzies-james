@@ -14,6 +14,7 @@ const newDice = () => {
 const DiceBoard = () => {
     const [diceList, setDiceList] = useState(newDice());
     const [hasWon, setHasWon] = useState(false);
+    const [hasLost, setHasLost] = useState(false);
 
     useEffect(() => {
         const allHeld = diceList.every(die => die.isHeld);
@@ -21,6 +22,8 @@ const DiceBoard = () => {
 
         if (allHeld && allSame) {
             setHasWon(true);
+        } else if (allHeld && !allSame) {
+            setHasLost(true)
         }
     }, [diceList]);
 
@@ -47,11 +50,14 @@ const DiceBoard = () => {
     const resetGame = () => {
         setDiceList(newDice());
         setHasWon(false);
+        setHasLost(false)
     };
 
 
     return (
         <div className="diceContainer">
+            {hasWon && <h2 className="winMessage">You Won!</h2>}
+            {hasLost && <h2 className="winMessage">You Lost! Try Again.</h2>}
             <div className="diceContent">
                 {diceList.map((die) => (
                     <Dice
@@ -63,10 +69,10 @@ const DiceBoard = () => {
                 ))}
             </div>
 
-            {hasWon && <h2 className="winMessage">You Won!</h2>}
+            
 
             <div className="rollButton">
-                {hasWon ? (
+                {(hasWon || hasLost) ? (
                     <button onClick={resetGame} className="rollBtn">New Game</button>
                 ) : (
                     <RollButton onRoll={rollUnheld} />
