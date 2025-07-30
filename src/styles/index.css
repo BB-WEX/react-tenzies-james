@@ -113,9 +113,23 @@ body {
 
 
 @keyframes spinAnim {
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to { 
+        transform: rotate(360deg); 
+    }
+    
 }
 
 .spin {
-    animation: spinAnim 1.5s ease;
+    animation: spinAnim .5s ease;
+    transform-origin: center center;
+    display: inline-block;
+    will-change: transform;
+}
+
+.btn.spin {
+    display: inline-block;
+    will-change: transform;
 }
