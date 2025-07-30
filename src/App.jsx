@@ -14,7 +14,7 @@ function App() {
     return (
         <div className='content'>
             {!showDice ? (
-                <button onClick={handleShow}>Start Game</button>
+                <button className='startBtn' onClick={handleShow}>Start Game</button>
             ) : (
                 <>
                     <Text />
