@@ -3,6 +3,7 @@ import Dice from "./dice";
 import RollButton from "./rerollButton";
 import Counter from "./Counter";
 import Timer from "./timer";
+import HighScore from "./highScore";
 
     
 const newDice = () => {
@@ -86,6 +87,7 @@ const DiceBoard = () => {
         <div className="diceContainer">
             <Timer seconds={seconds} />
             <Counter count={rollCount} />
+            <HighScore  currentScore={rollCount} isGameWon={hasWon}/>
             {hasWon && <h2 className="winMessage">You Won!</h2>}
             {hasLost && <h2 className="winMessage">You Lost! Try Again.</h2>}
             <div className="diceContent">
