@@ -1,12 +1,28 @@
 import { useState } from 'react'
-import Dice from './components/dice.jsx'
+import DiceBoard from './components/diceBoard.jsx'
+import "./styles/index.css"
+import Text from './components/text.jsx'
 
 
 function App() {
+    const [showDice, setShowDice] = useState(false)
+
+    const handleShow = () => {
+        setShowDice(true);
+    };
 
     return (
-        <Dice />
-    )
+        <div className='content'>
+            {!showDice ? (
+                <button className='startBtn' onClick={handleShow}>Start Game</button>
+            ) : (
+                <>
+                    <Text />
+                    <DiceBoard />
+                </>
+            )}
+        </div>
+    );
 }
 
-export default App
+export default App;
