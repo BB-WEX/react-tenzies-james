@@ -4,6 +4,7 @@ import RollButton from "./rerollButton";
 import Counter from "./Counter";
 import Timer from "./timer";
 import HighScore from "./highScore";
+import BestTime from "./bestTime";
 
     
 const newDice = () => {
@@ -21,6 +22,7 @@ const DiceBoard = () => {
     const [rollCount, setRollCount] = useState(0)
     const [seconds, setSeconds] = useState(0);
     const timeRef = useRef(null);
+    
 
     useEffect(() => {
         startTimer();
@@ -85,9 +87,14 @@ const DiceBoard = () => {
 
     return (
         <div className="diceContainer">
-            <Timer seconds={seconds} />
-            <Counter count={rollCount} />
-            <HighScore  currentScore={rollCount} isGameWon={hasWon}/>
+            <div className="timerAndCounter">
+                <Timer seconds={seconds} />
+                <Counter count={rollCount} />
+            </div>
+            <div className="bestScores">
+                <HighScore  currentScore={rollCount} isGameWon={hasWon}/>
+                <BestTime  currentTime={seconds} isGameWon={hasWon}/>
+            </div>
             {hasWon && <h2 className="winMessage">You Won!</h2>}
             {hasLost && <h2 className="winMessage">You Lost! Try Again.</h2>}
             <div className="diceContent">
