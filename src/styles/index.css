@@ -110,3 +110,12 @@ body {
     justify-content: space-between;
     font-size: 18px;
 }
+
+
+@keyframes spinAnim {
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spinAnim 1.5s ease;
+}

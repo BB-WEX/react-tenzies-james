@@ -1,14 +1,14 @@
 import { useState } from "react";
 import "../styles/dice.css"
 
-const Dice = ( { value, isHeld, onClick } ) => {
+const Dice = ( { value, isHeld, onClick, shouldSpin } ) => {
     
     return (
         <div>
             <button
                 onClick={onClick}
                 disabled={isHeld}
-                className={isHeld ? "btn held" : "btn"}
+                className={`btn ${isHeld ? "held" : ""} ${shouldSpin ? "spin" : ""}`}
             >
                 {value}
             </button>

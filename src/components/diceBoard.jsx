@@ -25,6 +25,7 @@ const DiceBoard = () => {
     const [seconds, setSeconds] = useState(0);
     const timeRef = useRef(null);
     const [width, height] = useWindowSize();
+    const [shouldSpin, setShouldSpin] = useState(false)
     
 
     useEffect(() => {
@@ -47,10 +48,21 @@ const DiceBoard = () => {
 
         if (allHeld && allSame) {
             setHasWon(true);
+            setShouldSpin(true);
         } else if (allHeld && !allSame) {
             setHasLost(true)
         }
     }, [diceList]);
+
+    useEffect(() => {
+        if (shouldSpin) {
+            const timer = setTimeout(() => setShouldSpin(false), 500)
+            return () => clearTimeout(timer);
+        }
+    }, [shouldSpin]);
+
+
+
 
     const startTimer = () => {
         clearInterval(timeRef.current);
@@ -84,6 +96,7 @@ const DiceBoard = () => {
         setHasLost(false)
         setRollCount(0);
         setSeconds(0);
+        setShouldSpin(false);
         startTimer();
     };
 
@@ -114,6 +127,7 @@ const DiceBoard = () => {
                         value={die.value}
                         isHeld={die.isHeld}
                         onClick={() => handleDiceClick(die.id)}
+                        shouldSpin={shouldSpin}
                     />
                 ))}
             </div>
