@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Dice from "./dice";
 import RollButton from "./rerollButton";
 import Counter from "./Counter";
+import Timer from "./timer";
 
     
 const newDice = () => {
@@ -17,6 +18,22 @@ const DiceBoard = () => {
     const [hasWon, setHasWon] = useState(false);
     const [hasLost, setHasLost] = useState(false);
     const [rollCount, setRollCount] = useState(0)
+    const [seconds, setSeconds] = useState(0);
+    const timeRef = useRef(null);
+
+    useEffect(() => {
+        startTimer();
+        return () => clearInterval(timeRef.current);
+    }, []);
+
+    useEffect(() => {
+        if (hasWon || hasLost) {
+            clearInterval(timeRef.current);
+        }
+    }, [hasWon, hasLost])
+
+
+
 
     useEffect(() => {
         const allHeld = diceList.every(die => die.isHeld);
@@ -29,7 +46,12 @@ const DiceBoard = () => {
         }
     }, [diceList]);
 
-
+    const startTimer = () => {
+        clearInterval(timeRef.current);
+        timeRef.current = setInterval(() => {
+            setSeconds(prev => prev + 1);
+        }, 1000);
+    };
 
 
     const handleDiceClick = (id) => {
@@ -55,11 +77,14 @@ const DiceBoard = () => {
         setHasWon(false);
         setHasLost(false)
         setRollCount(0);
+        setSeconds(0);
+        startTimer();
     };
 
 
     return (
         <div className="diceContainer">
+            <Timer seconds={seconds} />
             <Counter count={rollCount} />
             {hasWon && <h2 className="winMessage">You Won!</h2>}
             {hasLost && <h2 className="winMessage">You Lost! Try Again.</h2>}
