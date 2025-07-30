@@ -5,6 +5,8 @@ import Counter from "./Counter";
 import Timer from "./timer";
 import HighScore from "./highScore";
 import BestTime from "./bestTime";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@react-hook/window-size";
 
     
 const newDice = () => {
@@ -22,6 +24,7 @@ const DiceBoard = () => {
     const [rollCount, setRollCount] = useState(0)
     const [seconds, setSeconds] = useState(0);
     const timeRef = useRef(null);
+    const [width, height] = useWindowSize();
     
 
     useEffect(() => {
@@ -87,6 +90,13 @@ const DiceBoard = () => {
 
     return (
         <div className="diceContainer">
+            {hasWon && <Confetti
+                            width={width} 
+                            height={height} 
+                            numberOfPieces={500}
+                            recycle={false}
+                            gravity={0.8}
+                        />}
             <div className="timerAndCounter">
                 <Timer seconds={seconds} />
                 <Counter count={rollCount} />
