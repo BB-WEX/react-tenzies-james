@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Dice from "./dice";
 import RollButton from "./rerollButton";
+import Counter from "./Counter";
 
     
 const newDice = () => {
@@ -15,6 +16,7 @@ const DiceBoard = () => {
     const [diceList, setDiceList] = useState(newDice());
     const [hasWon, setHasWon] = useState(false);
     const [hasLost, setHasLost] = useState(false);
+    const [rollCount, setRollCount] = useState(0)
 
     useEffect(() => {
         const allHeld = diceList.every(die => die.isHeld);
@@ -44,6 +46,7 @@ const DiceBoard = () => {
                 die.isHeld ? die : { ...die, value: Math.floor(Math.random() * 6) + 1 }
             )
         );
+        setRollCount(prev => prev + 1);
     };
 
 
@@ -51,11 +54,13 @@ const DiceBoard = () => {
         setDiceList(newDice());
         setHasWon(false);
         setHasLost(false)
+        setRollCount(0);
     };
 
 
     return (
         <div className="diceContainer">
+            <Counter count={rollCount} />
             {hasWon && <h2 className="winMessage">You Won!</h2>}
             {hasLost && <h2 className="winMessage">You Lost! Try Again.</h2>}
             <div className="diceContent">
